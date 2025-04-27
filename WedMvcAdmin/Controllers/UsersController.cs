@@ -27,6 +27,7 @@ namespace WebMvc.Controllers
             _Context = context;
         }
 
+        //Get
         #region نمایش کاربران
         public async Task<IActionResult> Index()
         {
@@ -35,6 +36,7 @@ namespace WebMvc.Controllers
         }
         #endregion
 
+        //Post
         #region ایجاد
         public async Task<IActionResult> CreateClaims()
         {
@@ -78,6 +80,7 @@ namespace WebMvc.Controllers
             return View(model);
         }
         #endregion
+
         //Post
         #region سیو نقش ها به کاربر
 
@@ -103,7 +106,7 @@ namespace WebMvc.Controllers
 
         #endregion
 
-      
+        //Get.Post
         #region هتل و کاربر
         //Get
         #region نمایش هتل ها برای تخصیص به کاربر

@@ -1,5 +1,8 @@
-﻿
+﻿@using Domain.Models.Users
+@using Microsoft.AspNetCore.Identity
 
+@inject SignInManager<User> _signInManager
+@inject UserManager<User> _userManager
 
 
 <!doctype html>
@@ -12,16 +15,16 @@
     <meta name="description" content="nozha admin panel fully support rtl with complete dark mode css to use. ">
     <meta name=”robots” content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="./img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="./img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="~/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#ffffff">
     <!-- Place favicon.ico in the root directory -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link href="./css/fontawsome/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/normalize.css">
+    <link href="~/css/fontawsome/all.min.css" rel="stylesheet">
     <link rel="stylesheet"
           href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
           integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
@@ -31,7 +34,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="~/css/main.css">
 </head>
 
 <body class="rtl persianumber">
@@ -47,14 +50,17 @@
                 <ul class="nav navbar-nav p-0">
         
                     <li class="nav-item">
-                        <img src="./img/user-profile.jpg" alt="..."
+                        <img src="~/img/user-profile.jpg" alt="..."
                              class="rounded-circle screen-user-profile">
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
                             <button class="btn  dropdown-toggle m-0" type="button" id="dropdownMenu4"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                سامی
+                                @if (_signInManager.IsSignedIn(User))
+                                {
+                                    @User.Identity?.Name
+                                }
                             </button>
                             <div aria-labelledby="dropdownMenu4"
                                  class="dropdown-menu  pl-3 dropdown-menu-right dropdown-menu dropdown-menu-right"
@@ -68,9 +74,12 @@
                                 <button class="dropdown-item" type="button">
                                     <i class="fas fa-cog c-main fa-sm mr-2"></i>تنظیمات
                                 </button>
-                                <button class="dropdown-item" type="button">
-                                    <i class="fas fa-sign-out-alt c-main fa-sm mr-2"></i>خروج
-                                </button>
+                                <form asp-action="Logout" asp-controller="Account" method="post" id="logoutForm" class="navbar-right">
+                                    <button type="submit" class="dropdown-item" type="button">
+                                        <i class="fas fa-sign-out-alt c-main fa-sm mr-2"></i>خروج
+                                    </button>
+                                </form>
+                               
                             </div>
                         </div>
                     </li>
@@ -193,7 +202,7 @@
     </div>
 
   
-    <script src="js/vendor/modernizr.js"></script>
+    <script src="~/js/vendor/modernizr.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>
@@ -207,7 +216,7 @@
             integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="./js/persianumber.min.js"></script>
+    <script src="~/js/persianumber.min.js"></script>
     <script>
         $(document).ready(function () {
             $('body').bootstrapMaterialDesign();
@@ -226,7 +235,7 @@
             }
         }(document, 'script', 'weatherwidget-io-js');
     </script>
-    <script src="js/main.js"></script>
+    <script src="~/js/main.js"></script>
 
 </body>
 
