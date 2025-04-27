@@ -10,7 +10,7 @@ namespace Domain.BaseEntity
 {
     public abstract class BaseEntity<K> : IBaseEntity<K> where K : IEquatable<K>
     {
-        public K Id { get; }
+        public K Id { get; set; }
         public DateTime Created { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? Modified { get; set; }
@@ -34,7 +34,7 @@ namespace Domain.BaseEntity
         }
 
         [JsonIgnore]
-        public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
+        public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
 
     }
 }

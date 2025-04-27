@@ -1,11 +1,12 @@
-﻿@model List<Domain.Models.Hotels.Hotel>
+﻿@model IEnumerable<Domain.Models.Hotels.Hotel>
+
 @{
-    Layout = "_Layout";
+    ViewData["Title"] = "لیست هتل‌ها";
 }
 
-<h2>لیست هتل‌ها</h2>
+<h2>@ViewData["Title"]</h2>
 
-<a href="@Url.Action("Create")" class="btn btn-primary">افزودن هتل جدید</a>
+<a class="btn btn-success mb-3" asp-action="Create">افزودن هتل جدید</a>
 
 <table class="table table-bordered">
     <thead>
@@ -13,6 +14,8 @@
             <th>نام</th>
             <th>شهر</th>
             <th>ایمیل</th>
+            <th>ستاره</th>
+            <th>وضعیت</th>
             <th>عملیات</th>
         </tr>
     </thead>
@@ -23,10 +26,12 @@
                 <td>@hotel.Name</td>
                 <td>@hotel.City</td>
                 <td>@hotel.Email</td>
+                <td>@hotel.Star</td>
+                <td>@(hotel.State ? "فعال" : "غیرفعال")</td>
                 <td>
-                    <a href="@Url.Action("Edit", new { id = hotel.Id })" class="btn btn-warning">ویرایش</a>
-                    <a href="@Url.Action("Details", new { id = hotel.Id })" class="btn btn-info">جزئیات</a>
-                    <a href="@Url.Action("Delete", new { id = hotel.Id })" class="btn btn-danger">حذف</a>
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@hotel.Id">ویرایش</a>
+                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@hotel.Id">جزئیات</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@hotel.Id">حذف</a>
                 </td>
             </tr>
         }

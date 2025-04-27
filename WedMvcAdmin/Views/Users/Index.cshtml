@@ -16,6 +16,7 @@
             <th>UserName</th>
             <th>Email</th>
             <th>Roles</th>
+            <th>Hotel</th>
             <th></th>
         </tr>
     </thead>
@@ -25,12 +26,15 @@
             <tr>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
+
                 <td>
                     @* نمایش نقش‌های کاربر *@
                     @string.Join(", ", await UserManager.GetRolesAsync(user))
                 </td>
+                <td>@user.HotelId</td>
                 <td>
                     <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
+                    <a asp-action="SetHotel" asp-route-userId="@user.Id" class="btn btn-danger">SetHotel</a>
                 </td>
             </tr>
         }

@@ -1,78 +1,160 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Domain.Models.Hotels;
+using Infrastructure;
+
 
 namespace WebApp.Controllers
 {
     public class HotelController : Controller
     {
-        private static List<Hotel> _hotels = new List<Hotel>();
-        private static int _idCounter = 1;
+        private readonly ApplicationDbContext _context;
 
-        // لیست هتل‌ها
-        public IActionResult Index()
+        public HotelController(ApplicationDbContext context)
         {
-            return View(_hotels);
+            _context = context;
         }
+    
+        //Get
+        #region نمایش لیست هتل
+        // لیست هتل‌ها
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Hotels.ToListAsync());
+        }
+        #endregion
 
+        //Get
+        #region لود صفحه ایجاد
         // صفحه ایجاد هتل
         public IActionResult Create()
         {
             return View();
         }
 
+        #endregion
+
+        //Post
+        #region ایجاد هتل
         // عملیات ایجاد هتل
         [HttpPost]
-        public IActionResult Create(Hotel hotel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Hotel hotel)
         {
-        
-            _hotels.Add(hotel);
-            return RedirectToAction(nameof(Index));
-        }
-
-        // صفحه ویرایش هتل
-        public IActionResult Edit(int id)
-        {
-            var hotel = _hotels.FirstOrDefault(x => x.Id == id);
-            if (hotel == null) return NotFound();
+            if (ModelState.IsValid)
+            {
+                _context.Add(hotel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
             return View(hotel);
         }
+        #endregion
 
-        // عملیات ویرایش هتل
+        //Get
+        #region لود صفحه ویرایش
+        // صفحه ویرایش
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var hotel = await _context.Hotels.FindAsync(id);
+            if (hotel == null)
+                return NotFound();
+
+            return View(hotel);
+        }
+        #endregion
+
+        //Post
+        #region عملیات ویرایش
+        // عملیات ویرایش
         [HttpPost]
-        public IActionResult Edit(Hotel updatedHotel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Hotel hotel)
         {
-            var hotel = _hotels.FirstOrDefault(x => x.Id == updatedHotel.Id);
-            if (hotel == null) return NotFound();
+            if (id != hotel.Id)
+                return NotFound();
 
-            hotel.Name = updatedHotel.Name;
-            hotel.Email = updatedHotel.Email;
-            hotel.Phone = updatedHotel.Phone;
-            hotel.Description = updatedHotel.Description;
-            hotel.Star = updatedHotel.Star;
-            hotel.State = updatedHotel.State;
-            hotel.Address = updatedHotel.Address;
-            hotel.City = updatedHotel.City;
-
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(hotel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!HotelExists(hotel.Id))
+                        return NotFound();
+                    else
+                        throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(hotel);
         }
+        #endregion
 
-        // حذف هتل
-        public IActionResult Delete(int id)
+        //Get
+        #region صفحه جزئیات
+        // صفحه جزئیات
+        public async Task<IActionResult> Details(int? id)
         {
-            var hotel = _hotels.FirstOrDefault(x => x.Id == id);
-            if (hotel == null) return NotFound();
+            if (id == null)
+                return NotFound();
 
-            _hotels.Remove(hotel);
-            return RedirectToAction(nameof(Index));
-        }
+            var hotel = await _context.Hotels
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-        // نمایش اطلاعات یک هتل
-        public IActionResult Details(int id)
-        {
-            var hotel = _hotels.FirstOrDefault(x => x.Id == id);
-            if (hotel == null) return NotFound();
+            if (hotel == null)
+                return NotFound();
 
             return View(hotel);
+        }
+        #endregion
+
+        //Get
+        #region نمایش حذف
+        // صفحه حذف
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var hotel = await _context.Hotels
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (hotel == null)
+                return NotFound();
+
+            return View(hotel);
+        }
+        #endregion
+
+        //Post
+        #region عملیات حذف
+        // عملیات حذف
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var hotel = await _context.Hotels.FindAsync(id);
+            if (hotel != null)
+            {
+                _context.Hotels.Remove(hotel);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        #endregion
+
+        private bool HotelExists(int id)
+        {
+            return _context.Hotels.Any(e => e.Id == id);
         }
     }
 }

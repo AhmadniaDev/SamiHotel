@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<p>SetHotel</p>
+
+
+<form asp-action="SetHotel" method="post">
+    <input type="hidden" name="userId" value="@ViewBag.userId" />
+   
+    <div class="form-group">
+        <label>Select Hotel</label>
+        <select class="form-select" name="hotelId" asp-items="@ViewBag.hotels">
+            <option value="0">لیست هتل</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

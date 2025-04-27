@@ -1,8 +1,11 @@
-﻿using Domain.Models.Roles;
+﻿using Domain.Models.Hotels;
+using Domain.Models.Roles;
 using Domain.Models.Users;
+using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WedMvcAdmin.Models;
@@ -15,22 +18,24 @@ namespace WebMvc.Controllers
 
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly ApplicationDbContext _Context;
 
-        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _Context = context;
         }
 
-
+        #region نمایش کاربران
         public async Task<IActionResult> Index()
         {
             var users = _userManager.Users;
             return View(await users.ToListAsync());
         }
+        #endregion
 
-
-
+        #region ایجاد
         public async Task<IActionResult> CreateClaims()
         {
             var user = await _userManager.FindByNameAsync("alireza@gmaill.com");
@@ -49,27 +54,12 @@ namespace WebMvc.Controllers
             return BadRequest("Error adding claim.");
         }
 
+        #endregion
 
-        public async Task<IActionResult> RemoveClaims()
-        {
-            var user = await _userManager.FindByNameAsync("alireza@gmaill.com");
+        //Get
+        #region نمایش نقش ها در لیست کاربران
 
-            if (user != null)
-            {
-                var claim = new Claim("Permission", "CanEdit");
-                var result = await _userManager.RemoveClaimAsync(user, claim);
-
-                if (result.Succeeded)
-                {
-                    return Ok("Claim removed successfully.");
-                }
-            }
-
-            return BadRequest("Error adding claim.");
-        }
-
-
-
+        [Authorize]
         public async Task<IActionResult> ManageRoles(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -87,7 +77,9 @@ namespace WebMvc.Controllers
 
             return View(model);
         }
-
+        #endregion
+        //Post
+        #region سیو نقش ها به کاربر
 
 
         [HttpPost]
@@ -108,5 +100,47 @@ namespace WebMvc.Controllers
 
             return RedirectToAction("Index");
         }
+
+        #endregion
+
+      
+        #region هتل و کاربر
+        //Get
+        #region نمایش هتل ها برای تخصیص به کاربر
+        [Authorize]
+        public async Task<IActionResult> SetHotel(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ViewBag.userId = userId;
+            ViewBag.hotels = new SelectList(await _Context.Hotels.ToListAsync(), "Id", "Name", user.HotelId ?? 0);
+            return View();
+        }
+
+        #endregion
+        //Post
+        #region تخصیص هتل به کاربر
+
+
+        [HttpPost]
+        public async Task<IActionResult> SetHotel(string userId, int hotelId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.HotelId = hotelId;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("Index");
+        }
+        #endregion
+        #endregion
+
     }
 }

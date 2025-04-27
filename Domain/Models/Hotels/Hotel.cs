@@ -27,6 +27,6 @@ namespace Domain.Models.Hotels
         //شهر ها که باید بعدا داینامیک شه 
         public string City { get; set; }
         //ارتباط کاربر با هتل
-        public ICollection<User> Users { get; set; }
+        public ICollection<User>? Users { get; set; }
     }
 }
