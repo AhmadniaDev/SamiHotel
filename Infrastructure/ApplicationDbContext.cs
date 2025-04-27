@@ -1,5 +1,6 @@
 ﻿
 using Domain.BaseEntity;
+using Domain.Models.Hotels;
 using Domain.Models.Roles;
 using Domain.Models.Users;
 using Domain.UnitOfWork;
@@ -24,6 +25,7 @@ namespace Infrastructure
             _mediator = mediator;
         }
 
+        public DbSet<Hotel> Hotels { get; set; }
 
         public async Task<int> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {

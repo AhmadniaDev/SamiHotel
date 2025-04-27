@@ -1,0 +1,34 @@
+﻿@model List<Domain.Models.Hotels.Hotel>
+@{
+    Layout = "_Layout";
+}
+
+<h2>لیست هتل‌ها</h2>
+
+<a href="@Url.Action("Create")" class="btn btn-primary">افزودن هتل جدید</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>شهر</th>
+            <th>ایمیل</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hotel in Model)
+        {
+            <tr>
+                <td>@hotel.Name</td>
+                <td>@hotel.City</td>
+                <td>@hotel.Email</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = hotel.Id })" class="btn btn-warning">ویرایش</a>
+                    <a href="@Url.Action("Details", new { id = hotel.Id })" class="btn btn-info">جزئیات</a>
+                    <a href="@Url.Action("Delete", new { id = hotel.Id })" class="btn btn-danger">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

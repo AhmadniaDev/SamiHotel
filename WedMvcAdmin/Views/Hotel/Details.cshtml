@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model Domain.Models.Hotels.Hotel
+
+<h2>جزئیات هتل</h2>
+
+<div>
+    <p><strong>نام:</strong> @Model.Name</p>
+    <p><strong>ایمیل:</strong> @Model.Email</p>
+    <p><strong>تلفن:</strong> @Model.Phone</p>
+    <p><strong>توضیحات:</strong> @Model.Description</p>
+    <p><strong>ستاره:</strong> @Model.Star</p>
+    <p><strong>وضعیت فعال:</strong> @(Model.State ? "فعال" : "غیرفعال")</p>
+    <p><strong>آدرس:</strong> @Model.Address</p>
+    <p><strong>شهر:</strong> @Model.City</p>
+</div>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">بازگشت</a>
