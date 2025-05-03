@@ -23,6 +23,8 @@ namespace Application.Behaviors
         {
             request.UserId = _currentUserService.UserId;
             request.IsAdmin = _currentUserService.IsAdmin;
+            request.HotelId = _currentUserService.HotelId;
+
 
            return await next();
         }

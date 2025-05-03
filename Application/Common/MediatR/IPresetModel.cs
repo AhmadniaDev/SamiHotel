@@ -9,6 +9,7 @@ namespace Application.Common.MediatR
     public interface IPresetModel
     {
         int? UserId { get; set; }
+        int? HotelId { get; set; }
         bool IsAdmin { get; set; }
     }
 }

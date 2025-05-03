@@ -1,4 +1,6 @@
 ﻿
+using Domain.Models.Hotels;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ namespace Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(option =>
              option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IHotelRepository, HotelRepository>();
 
             return services;
         }

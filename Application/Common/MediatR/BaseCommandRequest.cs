@@ -13,6 +13,8 @@ namespace Application.Common.MediatR
         public int? UserId { get; set; }
         [BindNever]
         public bool IsAdmin { get; set; }
+        [BindNever]
+        public int? HotelId { get; set; }
 
     }
 }

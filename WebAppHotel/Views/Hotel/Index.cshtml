@@ -1,0 +1,124 @@
+﻿@using Domain.Models.Hotels
+@model Hotel
+@{
+    ViewData["Title"] = "ویرایش هتل";
+}
+
+<div class="jumbotron shade pt-5">
+    <h1 class="animate__animated animate__bounce">ویرایش هتل</h1>
+    <p class="c-grey font-weight-light font-italic">
+        ویرایش اطلاعات هتل در پنل کاربری
+    </p>
+
+    <form asp-action="Hotel" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <!-- Basic Info -->
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label for="name">نام هتل</label>
+                    <input type="text" class="form-control" id="name" name="Name" value="@Model.Name" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label for="city">شهر</label>
+                    <input type="text" class="form-control" id="city" name="City" value="@Model.City" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label for="address">آدرس</label>
+                    <input type="text" class="form-control" id="address" name="Address" value="@Model.Address" required>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label for="phone">شماره تماس</label>
+                    <input type="tel" class="form-control" id="phone" name="Phone" value="@Model.Phone" required>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="description">توضیحات</label>
+                    <textarea class="form-control" id="description" name="Description" rows="3">@Model.Description</textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">ایمیل</label>
+                    <input type="email" class="form-control" id="email" name="Email" value="@Model.Email">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="star">رتبه هتل</label>
+                    <select class="form-control" id="star" name="Star">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <option value="@i" selected="@(Model.Star == i ? "selected" : null)">@(i + " ستاره")</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Media & Status -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>پروفایل هتل</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="hotelImage">
+                        <label class="custom-file-label" for="hotelImage">انتخاب تصویر</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 align-self-end">
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="activeCheck" name="State" value="true" @(Model.State ? "checked" : "")>
+                    <label class="form-check-label" for="activeCheck">
+                        فعال
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-12">
+                <button type="submit" class="btn btn-success btn-block">
+                    <i class="fas fa-save"></i> ثبت تغییرات
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+<script>
+    (function () {
+        'use strict';
+
+        // Bootstrap validation
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        toastr.error('لطفا تمام فیلدهای الزامی را کامل کنید.', 'خطا', { timeOut: 5000 });
+                    } else {
+                        // نمایش پیام موفقیت در صورت اعتبارسنجی موفق
+                        toastr.success('تغییرات با موفقیت ذخیره شد.', 'موفقیت', { timeOut: 5000 });
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+}

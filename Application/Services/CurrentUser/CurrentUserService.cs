@@ -39,6 +39,27 @@ namespace Application.Services.CurrentUser
             }
         }
 
+        public int? HotelId
+        {
+            get
+            {
+                var user = _httpContextAccessor.HttpContext?.User;
+                if (user != null)
+                {
+                    var claim = user.FindFirst("hotelId");
+                    if (claim != null)
+                    {
+                        if (int.TryParse(claim.Value, out int hotelId))
+                        {
+                            return hotelId;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+
         //public bool IsAdmin => _httpContextAccessor.HttpContext?.User != null ?
         // (_httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Role).Value == "ادمین" ) : false;
 

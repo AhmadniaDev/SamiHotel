@@ -9,6 +9,7 @@ namespace Application.Services.CurrentUser
     public interface ICurrentUserService
     {
         int? UserId { get; }
+        int? HotelId { get; }
         bool IsAdmin { get; }
     }
 }
