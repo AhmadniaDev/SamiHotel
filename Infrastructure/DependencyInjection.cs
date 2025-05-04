@@ -1,4 +1,5 @@
 ﻿
+using Domain.Models.HotelGalleries;
 using Domain.Models.Hotels;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Infrastructure
              option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IHotelRepository, HotelRepository>();
+            services.AddScoped<IHotelGalleryRepository, HotelGalleryRepository>();
 
             return services;
         }

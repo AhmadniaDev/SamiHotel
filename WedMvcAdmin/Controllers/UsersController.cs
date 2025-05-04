@@ -12,7 +12,7 @@ using WedMvcAdmin.Models;
 
 namespace WebMvc.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
 

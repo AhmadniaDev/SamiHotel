@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebMvc.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     public class RolesController : Controller
     {
 

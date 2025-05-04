@@ -5,6 +5,8 @@ using System.Text;
 using Domain.BaseEntity;
 using System.Threading.Tasks;
 using Domain.Models.Users;
+using Domain.Models.HotelGalleries;
+using Domain.Models.Rooms;
 
 namespace Domain.Models.Hotels
 {
@@ -28,5 +30,8 @@ namespace Domain.Models.Hotels
         public string City { get; set; }
         //ارتباط کاربر با هتل
         public ICollection<User>? Users { get; set; }
+        public ICollection<HotelGallery>? HotelGalleries { get; set; }
+        public ICollection<Room>? Rooms { get; set; }
+
     }
 }

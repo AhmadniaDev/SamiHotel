@@ -22,6 +22,43 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Models.HotelGalleries.HotelGallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.ToTable("HotelGalleries");
+                });
+
             modelBuilder.Entity("Domain.Models.Hotels.Hotel", b =>
                 {
                     b.Property<int>("Id")
@@ -300,6 +337,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Models.HotelGalleries.HotelGallery", b =>
+                {
+                    b.HasOne("Domain.Models.Hotels.Hotel", "Hotel")
+                        .WithMany("HotelGalleries")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+                });
+
             modelBuilder.Entity("Domain.Models.Users.User", b =>
                 {
                     b.HasOne("Domain.Models.Hotels.Hotel", "Hotel")
@@ -363,6 +411,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Hotels.Hotel", b =>
                 {
+                    b.Navigation("HotelGalleries");
+
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618

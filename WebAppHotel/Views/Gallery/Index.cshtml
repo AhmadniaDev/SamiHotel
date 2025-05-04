@@ -1,0 +1,64 @@
+﻿@using Domain.Models.HotelGalleries
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<HotelGallery>
+
+
+
+<div class="jumbotron shade pt-8">
+    <h1 class="animate__animated animate__bounce">گالری</h1>
+    <p class="c-grey font-weight-light font-italic">
+        عکس های هتل
+    </p>
+         <form asp-action="SetImg" enctype="multipart/form-data">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>پروفایل هتل</label>
+                <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="hotelImage">
+                    <label class="custom-file-label" for="hotelImage">انتخاب تصویر</label>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-success btn-block">
+                    <i class="fas fa-save"></i> ثبت 
+                </button>
+        </div>
+        </form>
+</div>
+
+        @foreach(var item in Model)
+        {
+            <div class="gallery">
+                <a target="_blank" href="img_forest.jpg">
+                    <img src="/api/file/GetFile?fileName=@item.path" alt="Forest" width="600" height="400">
+                </a>
+                <a class="desc" asp-action="RemoveImg" asp-route-id="@item.Id" f style="cursor:pointer"><i class="fa fa-trach text-danger">حذف</i></a>
+            </div>
+        }
+       
+
+<style>
+
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+a.desc {
+  padding: 15px;
+  text-align: center;
+        cursor: pointer;
+}
+</style>

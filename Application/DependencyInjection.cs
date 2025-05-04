@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Application.Services.FileUpload;
 
 
 namespace Application
@@ -32,6 +33,7 @@ namespace Application
 
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IFileUploadService, FileUploadService>();
 
             //services.AddValidatorsFromAssemblyContaining(typeof(AddProductValidator));
 
