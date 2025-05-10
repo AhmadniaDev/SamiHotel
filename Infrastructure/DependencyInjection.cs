@@ -1,6 +1,7 @@
 ﻿
 using Domain.Models.HotelGalleries;
 using Domain.Models.Hotels;
+using Domain.Models.Rooms;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace Infrastructure
 
             services.AddScoped<IHotelRepository, HotelRepository>();
             services.AddScoped<IHotelGalleryRepository, HotelGalleryRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
 
             return services;
         }

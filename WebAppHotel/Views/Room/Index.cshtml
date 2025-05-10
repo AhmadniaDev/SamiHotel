@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "اتاق";
+}
+
+
+
+<button onclick="Create()" class="btn f-secondary text-center" > ایجاد </button>
+
+
+
+<div id="DataContainer">
+
+
+</div>
+
+
+
+@section Scripts{
+
+
+    <script>
+          document.addEventListener('DOMContentLoaded', async function() {
+          await GetList(1);
+        });
+
+
+        async function GetList(page){
+            var response = await fetch("/Room/GetList?page=" + page);
+            if(response.ok)
+            {
+                var res = await response.text();
+                var Container = document.getElementById('DataContainer');
+                Container.innerHTML = res;
+            }
+        }
+
+
+        async function Create()
+        {
+            $('#MyModal').modal('show');
+                    
+            var response = await fetch("/Room/Create");
+            if(response.ok)
+            {
+                var res = await response.text();
+                 $('#Modalbody').html(res);
+            }
+        }
+
+
+         async function SendCreate()
+        {
+            const form = document.getElementById('createForm');
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch('/Room/CreateRoom', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-start",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "عملیات با موفقیت انجام شد"
+                    });
+
+                    $('#MyModal').modal('hide');
+
+                } else {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-start",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: result.details
+                    });
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // async function SendCreate()
+        // {
+        //     const form = document.getElementById('createForm');
+        //     const formData = new FormData(form);
+
+        //     await PostForm('/Room/CreateRoom', formData);
+        //     await GetList(1);
+        //     $('#MyModal').modal('hide');
+        // }
+
+        
+    </script>
+}

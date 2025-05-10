@@ -1202,20 +1202,20 @@ label.form-check-label {
   color: #575757;
 }
 
-.pagination .page-item:first-of-type .page-link {
+/*.pagination .page-item:first-of-type .page-link {
   border-top-left-radius: .8rem;
   border-bottom-left-radius: .8rem;
   padding: 8px 14px;
   margin: 0;
 }
-
+        
 .pagination .page-item:last-of-type .page-link {
   border-top-right-radius: .8rem;
   border-bottom-right-radius: .8rem;
   padding: 8px 14px;
   margin: 0;
 }
-
+*/
 
 .pagination .page-item.active .page-link {
   color: #fff;

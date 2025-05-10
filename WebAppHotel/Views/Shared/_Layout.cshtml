@@ -87,9 +87,13 @@
 
 
 
+
                 </ul>
             </div>
+
         </header>
+      
+
         <div id="dw-s1" class="bmd-layout-drawer bg-faded ">
 
             <div class="container-fluid side-bar-container ">
@@ -120,7 +124,9 @@
                     <li class="side-item">
                         <a asp-controller="Gallery" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>گالری</a>
                     </li>
-                    <li class="side-item"><a href="./Login.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>اتاق</a></li>
+                    <li class="side-item">
+                        <a asp-controller="Room" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>اتاق </a>
+                    </li>
                     <li class="side-item"><a href="./glogin.html"><i class="fas fa-angle-right mr-2"></i>صفحه ورود رنگی</a></li>
 
             </div>
@@ -203,6 +209,23 @@
     </main>
     </div>
 
+    <!-- Modal -->
+    <div id="MyModal" class="modal w-lg fade " tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content card shade">
+                <div  class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="Modalbody" class="modal-body">
+                    Woohoo, you're reading this text in a modal!
+                </div>
+            </div>
+        </div>
+    </div>
   
     <script src="~/js/vendor/modernizr.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"

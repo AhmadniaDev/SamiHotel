@@ -1,0 +1,51 @@
+﻿
+
+
+
+
+<form id="createForm">
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="name">نام اتاق</label>
+                <input type="text" class="form-control"  name="Name" required placeholder="نام">
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="name">تعداد اتاق</label>
+                <input type="text" class="form-control"  name="Qty" required placeholder="2">
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="name"> تعداد تخت</label>
+                <input type="text" class="form-control"  name="MainCapaciary" required placeholder="1">
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="name">تخت اضافی</label>
+                <input type="text" class="form-control"  name="ExtraCapaciary" required placeholder="1">
+            </div>
+        </div>
+       
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="name">ویو اتاق</label>
+                <input type="text" class="form-control" name="View" required placeholder="جنگل">
+            </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-lg-6">
+            <label for="exampleFormControlInput1">عکس</label>
+            <input name="Path" type="file" class="form-control">
+        </div>
+
+    </div>
+</form>
+<button onclick="SendCreate()" class="btn f-secondary text-center">
+    ثبت
+</button>
+
+

@@ -14,15 +14,17 @@ namespace Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
+
             builder.HasKey(x => x.Id);
 
-            //builder.Property(x => x.path)
-            //      .IsRequired();
+            builder.Property(x => x.path)
+                  .IsRequired();
 
-            //builder.HasOne(s => s.Hotel)
-            //   .WithMany(s => s.HotelGalleries)
-            //   .OnDelete(DeleteBehavior.Restrict)
-            //   .HasForeignKey(s => s.HotelId);
+            builder.HasOne(s => s.Hotel)
+               .WithMany(s => s.Rooms)
+               .OnDelete(DeleteBehavior.Restrict)
+               .HasForeignKey(s => s.HotelId);
+
         }
     }
 }
