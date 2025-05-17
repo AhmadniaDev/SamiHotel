@@ -1,11 +1,11 @@
 ﻿@{
-    Layout = "_Layout";
+    Layout = null;
 }
-
 @model Domain.Models.Hotels.Hotel
 
-<h2>جزئیات هتل</h2>
+<h2 class="animate__animated animate__bounce" >جزئیات هتل</h2><br />
 
+<input type="hidden" asp-for="Id" />
 <div>
     <p><strong>نام:</strong> @Model.Name</p>
     <p><strong>ایمیل:</strong> @Model.Email</p>
@@ -17,4 +17,4 @@
     <p><strong>شهر:</strong> @Model.City</p>
 </div>
 
-<a href="@Url.Action("Index")" class="btn btn-secondary">بازگشت</a>
+<a href="@Url.Action("Index")" class="btn outlined o-danger c-danger">بازگشت</a>

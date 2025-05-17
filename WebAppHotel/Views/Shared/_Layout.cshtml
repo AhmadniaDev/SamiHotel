@@ -127,23 +127,22 @@
                     <li class="side-item">
                         <a asp-controller="Room" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>اتاق </a>
                     </li>
-                    <li class="side-item"><a href="./glogin.html"><i class="fas fa-angle-right mr-2"></i>صفحه ورود رنگی</a></li>
-
+                 
             </div>
             </ul>
 
             <ul class="side a-collapse short">
                 <a class="ul-text  fnt-mxs">
-                    <i class="fas fa-cog mr-1"></i> شخصی سازی
+                    <i class="fas fa-cog mr-1"></i> مدیریت
                     <!-- <span	class="badge badge-success">4</span> -->
                     <i class="fas fas fa-chevron-down arrow"></i>
                 </a>
                 <div class="side-item-container hide animated">
-                <li class="side-item"><a href="./color.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>رنگ</a></li>
+               @*  <li class="side-item"><a href="./color.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>رنگ</a></li>
                 <li class="side-item"><a href="./typo.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>تایپوکرافی</a></li>
                 <li class="side-item"><a href="./dark-mode.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>حالت شب</a></li>
                 <li class="side-item"><a href="./rtl.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>راست چین</a></li>
-                <li class="side-item"><a href="./sidebar.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>ساید بار</a></li>
+                <li class="side-item"><a href="./sidebar.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>ساید بار</a></li> *@
         </div>
         </ul>
         <p class="side-comment  fnt-mxs"></p>
@@ -215,7 +214,7 @@
         <div class="modal-dialog " role="document">
             <div class="modal-content card shade">
                 <div  class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -228,6 +227,7 @@
     </div>
   
     <script src="~/js/vendor/modernizr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>

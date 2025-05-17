@@ -1,7 +1,10 @@
-﻿using Application.Features.Rooms.Command;
+﻿using Application.Common.MediatR;
+using Application.Features.Hotels.Command;
+using Application.Features.Rooms.Command;
 using Application.Features.Rooms.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebAppHotel.Controllers
 {
@@ -18,15 +21,16 @@ namespace WebAppHotel.Controllers
 
         }
 
-        public async Task<IActionResult> GetList(int page = 1)
+        public async Task<IActionResult> GetList(int page = 1 , string? search = null)
         {
             var res = await _mediator.Send(new GetRoomsQuery()
             {
                 PageNumber = page,
-                PageSize = 2
-
+                PageSize = 3,
+                Search = search
             });
-
+      
+            ViewBag.search = search;
             return PartialView(res);
         }
 
@@ -43,6 +47,28 @@ namespace WebAppHotel.Controllers
             return Ok(res);
         }
 
+
+
+        public async Task<IActionResult> UpdateView(int id , int page)
+        {
+            var res = await _mediator.Send(new GetRoomByIdQuery() { Id = id});
+            ViewBag.page = page;
+            return PartialView(res);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRoom(UpdateRoomCommand command)
+        {
+            var res = await _mediator.Send(command);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRoom([FromBody] DeleteRoomCommand command)
+        {
+            var res = await _mediator.Send(command);
+            return RedirectToAction("Index");
+        }
 
     }
 }

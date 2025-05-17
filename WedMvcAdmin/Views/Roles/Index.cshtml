@@ -5,10 +5,13 @@
 }
 
 @model IEnumerable<Role>
-
-<h2>Roles</h2>
-<a asp-action="Create" class="btn btn-primary">Create New Role</a>
-
+<div class="jumbotron shade pt-8">
+    <h1 class="animate__animated animate__bounce">نقش</h1>
+    <p class="c-grey font-weight-light font-italic">
+        تخصیص نقش
+    </p>
+    <button onclick="Create()" class="btn outlined o-glass c-glass"> اضافه کردن نقش جدید </button>
+    <div style=" overflow-x: auto;">
 <table class="table">
     <thead>
         <tr>
@@ -17,6 +20,7 @@
         </tr>
     </thead>
     <tbody>
+
         @foreach (var role in Model)
         {
             <tr>
@@ -24,11 +28,32 @@
                 <td>
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="roleId" value="@role.Id" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn outlined o-danger c-danger" >حذف</button>
                     </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</div>
+
+</div>
+
+
+@section Scripts{
+    <script>
+        async function Create()
+        {
+            $('#MyModal').modal('show');
+
+            var response = await fetch("/Roles/Create");
+            if(response.ok)
+            {
+                var res = await response.text();
+                 $('#Modalbody').html(res);
+            }
+        }
+    </script>
+
+}
 

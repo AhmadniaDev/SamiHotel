@@ -1,51 +1,50 @@
-﻿
+﻿@using Domain.Models.Rooms
+@model Room
 
 
 
-
-<form id="createForm">
-    <h5 class="modal-title animate__animated animate__bounce" >ایجاد اتاق</h5><br />
+<form id="EditForm">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <h5 class="modal-title animate__animated animate__bounce" >ویرایش اتاق</h5><br />
     <div class="row">
         <div class="col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="name">نام اتاق</label>
-                <input type="text" class="form-control"  name="Name" required placeholder="نام">
+                <input type="text" class="form-control" name="Name" required placeholder="نام" value="@Model.Name">
             </div>
         </div>
         <div class="col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="name">تعداد اتاق</label>
-                <input type="text" class="form-control"  name="Qty" required placeholder="2">
+                <input type="text" class="form-control" name="Qty" required placeholder="2" value="@Model.Qty">
             </div>
         </div>
         <div class="col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="name"> تعداد تخت</label>
-                <input type="text" class="form-control"  name="MainCapaciary" required placeholder="1">
+                <input type="text" class="form-control" name="MainCapaciary" required placeholder="1" value="@Model.MainCapaciary">
             </div>
         </div>
         <div class="col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="name">تخت اضافی</label>
-                <input type="text" class="form-control"  name="ExtraCapaciary" required placeholder="1">
+                <input type="text" class="form-control" name="ExtraCapaciary" required placeholder="1" value="@Model.ExtraCapaciary">
             </div>
         </div>
-       
         <div class="col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="name">ویو اتاق</label>
-                <input type="text" class="form-control" name="View" required placeholder="جنگل">
+                <input type="text" class="form-control" name="View" required placeholder="جنگل" value="@Model.View">
             </div>
         </div>
-
         <div class="form-group col-sm-12 col-lg-6">
+            <img src="/api/file/Getfile?fileName=@Model.path" width="150" alt="عکس ندارد" />
             <label for="exampleFormControlInput1">عکس</label>
             <input name="Path" type="file" class="form-control">
         </div>
-
     </div>
 </form>
-<button onclick="SendCreate()" class="btn outlined o-second c-second">
+<button onclick="SendEdit(@ViewBag.page)" class="btn outlined o-second c-second">
     ثبت
 </button>
 

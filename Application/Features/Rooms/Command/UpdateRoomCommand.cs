@@ -1,16 +1,17 @@
-﻿using Domain.BaseEntity;
-using Domain.Models.Hotels;
-using Domain.Models.Prices;
+﻿using Application.Common.MediatR;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Rooms
+namespace Application.Features.Rooms.Command
 {
-    public class Room : BaseEntity<int>
+    public class UpdateRoomCommand : BaseCommandRequest , IRequest<bool>
     {
+        public int id { get; set; }
         //نام اتاق
         public string Name { get; set; }
         //چند نوع از این اتاق داریم
@@ -20,11 +21,8 @@ namespace Domain.Models.Rooms
         //تخت اضافی
         public int? ExtraCapaciary { get; set; }
         //عکس هتل
-        public string path { get; set; }
+        public IFormFile? path { get; set; }
         //ویو هتل
         public int? View { get; set; }
-        public int HotelId { get; set; }
-        public Hotel Hotel { get; set; }
-        public ICollection<RoomPrice>? roomprice { get; set; }
     }
 }

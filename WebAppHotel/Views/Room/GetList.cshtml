@@ -2,7 +2,17 @@
 @using Domain.Models.Rooms
 @model PaginatedList<Room>
 
-
+<br />
+<div class="input-group mb-3 col-6">
+    <input style="border-radius:5px" type="text" class="form-control" placeholder="جستجو"
+           id="SearchInput" value="@ViewBag.search">
+    <div class="input-group-append">
+        <button onclick="Search()" class="btn btn-outline-secondary c-primary" style="border-radius:5px" type="button"
+                id="button-addon2" >
+            <i class="fab fas fa-search"></i>
+        </button>
+    </div>
+</div>
 <div class="card shade h-100">
     <div class="card-body">
         <table class="table table-striped">
@@ -13,17 +23,22 @@
                     <th scope="col">تعداد</th>
                     <th scope="col">تعداد تخت </th>
                     <th scope="col">ویو اتاق </th>
+                    <th scope="col">عملیات</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Items)
                 {
                     <tr>
-                        <th scope="row"><img src="/api/file/GetFile?fileName=@item.path" width="200" /></th>
+                        <th scope="row"><img src="/api/file/GetFile?fileName=@item.path" width="100" /></th>
                         <td>@item.Name</td>
                         <td>@item.Qty</td>
                         <td>@item.MainCapaciary</td>
                         <td>@item.View</td>
+                        <td>
+                            <i onclick="Edit(@item.Id , @Model.PageNumber)" style="cursor:pointer" class="fa fa-edit text-info"></i>
+                            <i onclick="Delete(@item.Id , @Model.PageNumber)" style="cursor:pointer" class="fa fa-trash text-danger"></i>
+                        </td>
                     </tr>
                 }
             </tbody>

@@ -41,8 +41,6 @@ namespace Application.Common.Pagination
 
                 return new PaginatedList<T>(itemsWithoutPagination, count, pageNumber, pageSize);
             }
-
-
         }
     }
 }

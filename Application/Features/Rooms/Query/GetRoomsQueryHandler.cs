@@ -25,6 +25,7 @@ namespace Application.Features.Rooms.Query
         {
             var data = await _roomRepository.Get(a => a.Enable && a.HotelId == request.HotelId.Value)
                 .AsNoTracking()
+                .SearchQuery(request.Search)
                 .PaginatedListAsync(request.PageNumber, request.PageSize, request.DisablePaging);
 
             return data;

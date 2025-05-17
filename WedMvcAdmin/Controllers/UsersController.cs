@@ -27,7 +27,7 @@ namespace WebMvc.Controllers
             _Context = context;
         }
 
-        //Get
+     
         #region نمایش کاربران
         public async Task<IActionResult> Index()
         {
@@ -36,8 +36,16 @@ namespace WebMvc.Controllers
         }
         #endregion
 
-        //Post
+
+
         #region ایجاد
+
+        public IActionResult Create()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CreateClaims()
         {
             var user = await _userManager.FindByNameAsync("alireza@gmaill.com");
@@ -58,7 +66,7 @@ namespace WebMvc.Controllers
 
         #endregion
 
-        //Get
+
         #region نمایش نقش ها در لیست کاربران
 
         [Authorize]
@@ -77,11 +85,11 @@ namespace WebMvc.Controllers
                 AssignedRoles = await _userManager.GetRolesAsync(user)
             };
 
-            return View(model);
+            return PartialView(model);
         }
         #endregion
 
-        //Post
+
         #region سیو نقش ها به کاربر
 
 
@@ -106,9 +114,9 @@ namespace WebMvc.Controllers
 
         #endregion
 
-        //Get.Post
-        #region هتل و کاربر
-        //Get
+   
+  
+   
         #region نمایش هتل ها برای تخصیص به کاربر
         [Authorize]
         public async Task<IActionResult> SetHotel(string userId)
@@ -120,11 +128,12 @@ namespace WebMvc.Controllers
             }
             ViewBag.userId = userId;
             ViewBag.hotels = new SelectList(await _Context.Hotels.ToListAsync(), "Id", "Name", user.HotelId ?? 0);
-            return View();
+            return PartialView();
         }
 
+
         #endregion
-        //Post
+   
         #region تخصیص هتل به کاربر
 
 
@@ -143,7 +152,7 @@ namespace WebMvc.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-        #endregion
+      
 
     }
 }

@@ -42,15 +42,9 @@ namespace Application.Features.Rooms.Command
                 ExtraCapaciary = request.ExtraCapaciary,
              
             };
-
             _roomRepository.Add(room);
             await _roomRepository.unitOfWork.SaveEntitiesAsync(cancellationToken);
-            return true;
-        
-
+            return true;       
         }
-
-
-
     }
 }

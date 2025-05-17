@@ -2,16 +2,19 @@
 @{
     ViewData["Title"] = "ManageRoles";
 }
-
+@{
+    Layout = null;
+}  <!-- خیلی مهم برای جلوگیری از لود layout داخل مودال -->
 @model ManageUserRolesViewModel
+<h2 class ="animate__animated animate__bounce">تخصیص نقش به کاربر</h2>
 
-<h2>Manage Roles for @Model.UserId</h2>
+<h5>کاربر با ایدی @Model.UserId</h5>
 
 <form asp-action="ManageRoles" method="post">
     <input type="hidden" asp-for="UserId" />
 
     <div class="form-group">
-        <label>Select Roles</label>
+        <label></label>
         @foreach (var role in Model.AvailableRoles)
         {
             <div class="form-check">
@@ -24,5 +27,5 @@
         }
     </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn outlined o-second c-second">ثبت</button>
 </form>

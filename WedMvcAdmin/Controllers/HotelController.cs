@@ -29,7 +29,7 @@ namespace WebApp.Controllers
         // صفحه ایجاد هتل
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         #endregion
@@ -65,11 +65,37 @@ namespace WebApp.Controllers
 
             return View(hotel);
         }
+
         #endregion
 
         //Post
         #region عملیات ویرایش
         // عملیات ویرایش
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, Hotel hotel)
+        //{
+        //    if (id != hotel.Id)
+        //        return NotFound();
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(hotel);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!HotelExists(hotel.Id))
+        //                return NotFound();
+        //            else
+        //                throw;
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return PartialView(hotel);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Hotel hotel)
@@ -91,10 +117,27 @@ namespace WebApp.Controllers
                     else
                         throw;
                 }
+
+                // اگر درخواست AJAX بود، وضعیت موفقیت برگردون
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true });
+                }
+
+                // در حالت عادی:
                 return RedirectToAction(nameof(Index));
             }
+
+            // اگر مدل معتبر نبود و از طریق AJAX اومده
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_Edit", hotel);
+            }
+
+            // در غیر این صورت
             return View(hotel);
         }
+
         #endregion
 
         //Get
@@ -111,7 +154,7 @@ namespace WebApp.Controllers
             if (hotel == null)
                 return NotFound();
 
-            return View(hotel);
+            return PartialView(hotel);
         }
         #endregion
 
@@ -129,7 +172,7 @@ namespace WebApp.Controllers
             if (hotel == null)
                 return NotFound();
 
-            return View(hotel);
+            return PartialView(hotel);
         }
         #endregion
 

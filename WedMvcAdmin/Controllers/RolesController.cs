@@ -23,12 +23,10 @@ namespace WebMvc.Controllers
             var roles = _roleManager.Roles;
             return View(await roles.ToListAsync());
         }
-
-
-
+     
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // ایجاد نقش جدید
