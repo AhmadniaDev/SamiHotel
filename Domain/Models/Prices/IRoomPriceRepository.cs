@@ -1,14 +1,14 @@
 ﻿using Domain.BaseRepository;
-using Domain.Models.Prices;
+using Domain.Models.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Rooms
+namespace Domain.Models.Prices
 {
-    public interface IRoomRepository : IBaseRepository<Room , int>
+    public interface IRoomPriceRepository : IBaseRepository<RoomPrice, int>
     {
     }
 }

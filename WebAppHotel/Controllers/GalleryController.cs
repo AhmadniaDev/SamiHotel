@@ -1,10 +1,12 @@
 ﻿using Application.Features.HotelGalleries.Command;
 using Application.Features.HotelGalleries.Query;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAppHotel.Controllers
 {
+    [Authorize(Roles = "modir")]
     public class GalleryController : Controller
     {
         private readonly IMediator _mediator;

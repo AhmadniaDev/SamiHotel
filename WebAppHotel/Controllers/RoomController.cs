@@ -3,11 +3,13 @@ using Application.Features.Hotels.Command;
 using Application.Features.Rooms.Command;
 using Application.Features.Rooms.Query;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebAppHotel.Controllers
 {
+    [Authorize]
     public class RoomController : Controller
     {
         private readonly IMediator _mediator;
@@ -20,7 +22,7 @@ namespace WebAppHotel.Controllers
             return View();
 
         }
-
+        [Authorize(Roles = "modir")]
         public async Task<IActionResult> GetList(int page = 1 , string? search = null)
         {
             var res = await _mediator.Send(new GetRoomsQuery()
@@ -33,7 +35,7 @@ namespace WebAppHotel.Controllers
             ViewBag.search = search;
             return PartialView(res);
         }
-
+        [Authorize(Roles = "modir")]
         public IActionResult Create()
         {
             return PartialView();
@@ -41,6 +43,7 @@ namespace WebAppHotel.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "modir")]
         public async Task<IActionResult> CreateRoom(CreateRoomCommand command)
         {
             var res = await _mediator.Send(command);
@@ -48,7 +51,7 @@ namespace WebAppHotel.Controllers
         }
 
 
-
+        [Authorize(Roles = "modir")]
         public async Task<IActionResult> UpdateView(int id , int page)
         {
             var res = await _mediator.Send(new GetRoomByIdQuery() { Id = id});
@@ -57,6 +60,7 @@ namespace WebAppHotel.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "modir")]
         public async Task<IActionResult> UpdateRoom(UpdateRoomCommand command)
         {
             var res = await _mediator.Send(command);
@@ -64,6 +68,7 @@ namespace WebAppHotel.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "modir")]
         public async Task<IActionResult> DeleteRoom([FromBody] DeleteRoomCommand command)
         {
             var res = await _mediator.Send(command);

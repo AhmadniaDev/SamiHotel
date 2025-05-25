@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+ 
+}
+
+<button onclick="Create()" class="btn outlined o-glass c-glass">ایجاد بازه قیمت</button><br /><br />
+
+
+<div class="card shade ">
+    <div class="card-footer d-flex justify-content-between">
+        <button onclick="lastWeek()" class="btn btn-outline-secondary">قبلی</button>
+        <button onclick="nextWeek()" class="btn btn-outline-secondary">بعدی</button>
+    </div>
+    <div class="card-body p-3">
+        <div id="DataContainer" class="p-3">
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script>
+
+            document.addEventListener('DOMContentLoaded', async function() {
+          await Load("");
+         });
+
+
+         async function Load(start , week){
+
+            var response = await fetch("/RoomPrice/List?start=" + start + "&week=" + week);
+            if(response.ok)
+            {
+                var res = await response.text();
+                var Container = document.getElementById('DataContainer');
+                Container.innerHTML = res;
+            }
+        }
+
+
+        async function lastWeek()
+        {
+            var Date = document.getElementById("start").value;
+            await Load( Date, "last")
+        }
+
+          async function nextWeek()
+        {
+            var Date = document.getElementById("start").value;
+            await Load( Date, "next")
+        }
+
+        async function Create() {
+            $('#MyModal').modal('show');
+            const response = await fetch("/RoomPrice/CreateViews");
+            if (response.ok) {
+                const res = await response.text();
+                $('#Modalbody').html(res);
+                $('#Modallabel').html("ایجاد بازه قیمت");
+                LoadDatePicker();
+                LoadSelect();
+            }
+        }
+
+                async function SendEdit() {
+            const form = document.getElementById('CalendarForm');
+            const formData = new FormData(form);
+
+            try {
+                const response = await PostForm('/RoomPrice/UpdateView', formData);
+
+                // اینجا فقط پیام موفقیت خودت رو نشون می‌دی
+                if (response.ok) {
+                    alert("ویرایش با موفقیت انجام شد ✅");
+                } else {
+                    alert("خطا در ویرایش ❌");
+                }
+
+                const date = document.getElementById("start").value;
+                await GetList(date, "");
+            } catch (error) {
+                console.error("Error:", error);
+                alert("خطایی رخ داد");
+            }
+        }
+
+        function LoadSelect() {
+            $('.js-select').select2();
+            let allOptions = [];
+            $('.js-select option').each(function () {
+                allOptions.push($(this).val());
+            });
+            $('.js-select').val(allOptions).trigger('change');
+        }
+
+        function LoadDatePicker() {
+            $(".example1").pDatepicker({
+                format: 'YYYY/MM/DD',
+                initialValue: false,
+                autoClose: true
+            });
+        }
+    </script>
+}

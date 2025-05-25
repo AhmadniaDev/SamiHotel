@@ -1,10 +1,12 @@
 ﻿using Domain.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace WebAppHotel.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -41,6 +43,12 @@ namespace WebAppHotel.Controllers
             }
             return View();
         }
+
+        //public IActionResult AccessDenied()
+        //{
+        //    ViewData["AccessDenied"] = true;
+        //    return View(); // یا هر ویویی که می‌خوای مودال توش بیاد
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

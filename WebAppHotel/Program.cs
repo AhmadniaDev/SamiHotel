@@ -1,11 +1,14 @@
-using Domain.Models.Roles;
+﻿using Domain.Models.Roles;
 using Domain.Models.Users;
 using Application;
 using Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -27,6 +30,29 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.SignIn.RequireConfirmedPhoneNumber = true;
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  
+    //options.AccessDeniedPath = "/Secure/GetSecureData";
+    //options.LoginPath = "/Account/Login";
+
+
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            context.Response.StatusCode = 403;
+            context.Response.ContentType = "application/json";
+            var result = JsonSerializer.Serialize(new { error = "شما اجازه دسترسی به این بخش را ندارید." });
+            return context.Response.WriteAsync(result);
+        }
+
+        context.Response.Redirect(context.Options.AccessDeniedPath);
+        return Task.CompletedTask;
+    };
+
+   
+});
 
 
 

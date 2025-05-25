@@ -32,8 +32,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/main.css">
 </head>
 
@@ -66,7 +68,8 @@
                                  class="dropdown-menu  pl-3 dropdown-menu-right dropdown-menu dropdown-menu-right"
                                  aria-labelledby="dropdownMenu2">
                                 <button class="dropdown-item" type="button">
-                                    <i class="far fa-user c-main fa-sm mr-2"></i>پروفایل
+                                   
+                                    <i  class="far fa-user c-main fa-sm mr-2"></i>پروفایل
                                 </button>
                                 <button onclick="dark()" class="dropdown-item" type="button">
                                     <i class="fas fa-moon fa-sm c-main mr-2"></i>حالت شب
@@ -99,7 +102,7 @@
             <div class="container-fluid side-bar-container ">
                 <header class="pb-0">
                     <a class="navbar-brand ">
-                        <object class="side-logo" data="./svg/logo-8.svg" type="image/svg+xml">
+                        <object class="side-logo" data="~/img/Layer 3.png" type="image/svg+xml">
                         </object>
                     </a>
                 </header>
@@ -126,6 +129,9 @@
                     </li>
                     <li class="side-item">
                         <a asp-controller="Room" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>اتاق </a>
+                    </li>
+                    <li class="side-item">
+                        <a asp-controller="RoomPrice" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>قیمت ها </a>
                     </li>
                  
             </div>
@@ -206,8 +212,7 @@
             </div> 
         </div>
     </main>
-    </div>
-
+    </div> 
     <!-- Modal -->
     <div id="MyModal" class="modal w-lg fade " tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -219,15 +224,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="Modalbody" class="modal-body">
-                    Woohoo, you're reading this text in a modal!
+                <div id="Modalbody" class="modal-body" >
+                    <div style="color:red">
+                        شما دسترسی به این قسمت ندارید
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  
+    <script src="~/js/access.js"></script>
     <script src="~/js/vendor/modernizr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>
@@ -260,73 +268,13 @@
             }
         }(document, 'script', 'weatherwidget-io-js');
     </script>
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.js"></script>
+  
+    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@* <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebAppHotel</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WebAppHotel.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebAppHotel</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - WebAppHotel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
- *@

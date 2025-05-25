@@ -13,7 +13,7 @@ namespace Domain.Models.Prices
         public int RoomId { get; set; }
         public long Price { get; set; }
         public long BedPrice { get; set; }
-        public DateTime? DateVal { get; set; }
-        public Room? Room { get; set; }
+        public DateTime DateVal { get; set; }
+        public Room Room { get; set; }
     }
 }
