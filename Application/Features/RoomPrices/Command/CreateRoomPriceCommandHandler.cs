@@ -64,7 +64,10 @@ namespace Application.Features.RoomPrices.Command
 
                         _roomPriceRepository.Update(roomPrice);
                     }
-                }          
+                }
+
+                var history = new RoomPriceHistory(roomId, request.Price, request.BedPrice, form, to);
+                _roomPriceRepository.AddHistory(history);
             }
              await _roomPriceRepository.unitOfWork.SaveEntitiesAsync();
             return true;

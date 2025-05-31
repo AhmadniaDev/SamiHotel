@@ -17,13 +17,16 @@ namespace WebAppHotel.Controllers
         { 
             _mediator = mediator;
         }
+
         public async Task<IActionResult> Index()
         {
+            var room = await _mediator.Send(new GetRoomsQuery() { DisablePaging = true });
+            ViewBag.Rooms = new SelectList(room.Items, "Id", "Name");
             return View();
         }
 
-        [Authorize(Roles = "modir")]
-        public async Task<IActionResult> List(DateTime? start = null , string? week = null)
+        [HttpPost]
+        public async Task<IActionResult> List(DateTime? start = null , string? week = null ,[FromBody] List<int>? rooms = null)
         {
             start ??= DateTime.Now;
             if (!string.IsNullOrWhiteSpace(week)) {
@@ -32,35 +35,31 @@ namespace WebAppHotel.Controllers
             if (week == "last")
                  start = start.Value.AddDays(-7);
             }
-            var res = await _mediator.Send(new GetRoomPriceQuery() { startDate = start.Value  });
-
-          
+            var res = await _mediator.Send(new GetRoomPriceQuery() { startDate = start.Value ,rooms = rooms });
             ViewBag.start=start.ToString();
             return PartialView(res);
         }
 
-
         [Authorize(Roles = "modir")]
         public async Task<IActionResult> CreateViews()
         {
-
            var room = await _mediator.Send(new GetRoomsQuery() { DisablePaging= true});
             ViewBag.Rooms = new SelectList(room.Items, "Id", "Name");
             return PartialView();
         }
 
-        [Authorize(Roles = "modir")]
+        [HttpPost]
         public async Task<IActionResult> CreateRoomPrice(CreateRoomPriceCommand command)
         {
             var res = await _mediator.Send(command);
             return Ok(res);
         }
 
+        [HttpPost]
         public async Task<IActionResult> UpdateView(UpdateRoomPriceCommand command)
         {
             var res = await _mediator.Send(command);
             return Ok(res);
         }
-       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.BaseEntity;
+using Domain.Models.Capacity;
 using Domain.Models.Hotels;
 using Domain.Models.Prices;
 using System;
@@ -26,5 +27,8 @@ namespace Domain.Models.Rooms
         public int HotelId { get; set; }
         public Hotel Hotel { get; set; }
         public ICollection<RoomPrice>? roomprice { get; set; }
+        public ICollection<RoomPriceHistory>? RoomPriceHistorys { get; set; }
+        public ICollection<RoomCapacity>? RoomCapacitys { get; set; }
+        public ICollection<RoomCapacityHistory>? RoomCapacityHistorys { get; set; }
     }
 }

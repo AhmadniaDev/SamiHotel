@@ -22,6 +22,87 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Models.Capacity.RoomCapacity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateVal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomCapacitys");
+                });
+
+            modelBuilder.Entity("Domain.Models.Capacity.RoomCapacityHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("from")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("to")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomCapacityHistorys");
+                });
+
             modelBuilder.Entity("Domain.Models.HotelGalleries.HotelGallery", b =>
                 {
                     b.Property<int>("Id")
@@ -139,7 +220,7 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateVal")
+                    b.Property<DateTime>("DateVal")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
@@ -162,6 +243,51 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("RoomPrices");
+                });
+
+            modelBuilder.Entity("Domain.Models.Prices.RoomPriceHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<long>("BedPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("from")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("to")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomPriceHistorys");
                 });
 
             modelBuilder.Entity("Domain.Models.Roles.Role", b =>
@@ -432,6 +558,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Models.Capacity.RoomCapacity", b =>
+                {
+                    b.HasOne("Domain.Models.Rooms.Room", "Room")
+                        .WithMany("RoomCapacitys")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Domain.Models.Capacity.RoomCapacityHistory", b =>
+                {
+                    b.HasOne("Domain.Models.Rooms.Room", "Room")
+                        .WithMany("RoomCapacityHistorys")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("Domain.Models.HotelGalleries.HotelGallery", b =>
                 {
                     b.HasOne("Domain.Models.Hotels.Hotel", "Hotel")
@@ -447,6 +595,17 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Models.Rooms.Room", "Room")
                         .WithMany("roomprice")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Domain.Models.Prices.RoomPriceHistory", b =>
+                {
+                    b.HasOne("Domain.Models.Rooms.Room", "Room")
+                        .WithMany("RoomPriceHistorys")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -537,6 +696,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.Rooms.Room", b =>
                 {
+                    b.Navigation("RoomCapacityHistorys");
+
+                    b.Navigation("RoomCapacitys");
+
+                    b.Navigation("RoomPriceHistorys");
+
                     b.Navigation("roomprice");
                 });
 #pragma warning restore 612, 618

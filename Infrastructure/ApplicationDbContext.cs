@@ -1,5 +1,6 @@
 ﻿
 using Domain.BaseEntity;
+using Domain.Models.Capacity;
 using Domain.Models.HotelGalleries;
 using Domain.Models.Hotels;
 using Domain.Models.Prices;
@@ -32,6 +33,9 @@ namespace Infrastructure
         public DbSet<HotelGallery> HotelGalleries { get; set; }
         public DbSet<Room> Room { get; set; }
         public DbSet<RoomPrice> RoomPrices { get; set; }
+        public DbSet<RoomPriceHistory> RoomPriceHistorys { get; set; }
+        public DbSet<RoomCapacityHistory> RoomCapacityHistorys { get; set; }
+        public DbSet<RoomCapacity> RoomCapacitys { get; set; }
        
 
         public async Task<int> SaveEntitiesAsync(CancellationToken cancellationToken = default)

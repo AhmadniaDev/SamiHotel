@@ -3,7 +3,7 @@
 @model RoomPriceDto
 
 <input type="hidden" id="start" value="@ViewBag.start" />
-<form asp-controller="RoomPrice" asp-action="UpdateView"  method="post">
+<form id="CalendarFormm">
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -20,12 +20,12 @@
             </tr>
         </thead>
         <tbody>
+            @{
+                int i = 0;
+            }
             @foreach (var room in Model.Rooms)
             {
                 <tr>
-                    @{
-                        int i = 0;
-                    }
                 <th>@room.Name</th>
                 @foreach (var item in Model.Days)
                 {
@@ -55,7 +55,6 @@
     </tbody>
 </table>
 
-    <button  class="btn outlined o-second c-second">
-        ثبت
-    </button>
+    <button type="button" onclick="SendEdit()" class="btn outlined o-second c-second">ذخیره تغییرات</button>
+
 </form>

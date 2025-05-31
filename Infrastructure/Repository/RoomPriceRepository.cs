@@ -14,5 +14,10 @@ namespace Infrastructure.Repository
         public RoomPriceRepository(ApplicationDbContext context) : base(context)
         {
         }
+
+        public void AddHistory(RoomPriceHistory history)
+        {
+            _context.RoomPriceHistorys.Add(history);
+        }
     }
 }

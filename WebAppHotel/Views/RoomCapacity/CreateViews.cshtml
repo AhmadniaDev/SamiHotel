@@ -1,0 +1,36 @@
+﻿
+<form id="createForm">
+    <h5 class="modal-title animate__animated animate__bounce">ایجاد اتاق</h5><br />
+    <div class="row">
+        <div class="form-group col-sm-12 col-lg-12">
+            <label for="exampleFormControlInput1">اتاق ها</label>
+            <select style="width: 100%" name="rooms[]" multiple="multiple" class="form-control js-select" asp-items="@ViewBag.Rooms"></select>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                    <label for="name">از تاریخ</label>
+                    <input class="form-control example1" name="form">
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                    <label for="name"> تا تاریخ</label>
+                    <input type="text" class="form-control example1" name="to">
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                    <label for="name"> ظرفیت اتاق</label>
+                    <input type="text" class="form-control" value="1" name="Qty" required placeholder="1">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<button onclick="SendCreate()" class="btn outlined o-second c-second">
+    ثبت
+</button>
+
+
+

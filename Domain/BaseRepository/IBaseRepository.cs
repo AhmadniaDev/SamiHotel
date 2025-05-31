@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.BaseRepository
+namespace Domain.IBaseRepository
 {
     public interface IBaseRepository<T , K> where T : IBaseEntity<K> where K : IEquatable<K>
     {

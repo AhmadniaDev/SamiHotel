@@ -20,8 +20,8 @@ namespace WebAppHotel.Controllers
         public IActionResult Index()
         {
             return View();
-
         }
+
         [Authorize(Roles = "modir")]
         public async Task<IActionResult> GetList(int page = 1 , string? search = null)
         {
@@ -35,6 +35,7 @@ namespace WebAppHotel.Controllers
             ViewBag.search = search;
             return PartialView(res);
         }
+
         [Authorize(Roles = "modir")]
         public IActionResult Create()
         {
@@ -43,7 +44,6 @@ namespace WebAppHotel.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "modir")]
         public async Task<IActionResult> CreateRoom(CreateRoomCommand command)
         {
             var res = await _mediator.Send(command);

@@ -1,4 +1,4 @@
-﻿using Domain.BaseRepository;
+﻿using Domain.IBaseRepository;
 using Domain.Models.Prices;
 using System;
 using System.Collections.Generic;

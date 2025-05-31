@@ -46,6 +46,8 @@ namespace Application.Features.RoomPrices.Command
                     price.BedPrice = items.BedPrice;
                     _roomPriceRepository.Update(price);
                 }
+                var history = new RoomPriceHistory(items.RoomId, items.Price, items.BedPrice, items.DateVal, null);
+                _roomPriceRepository.AddHistory(history);
             }
 
             await _roomPriceRepository.unitOfWork.SaveEntitiesAsync();

@@ -1,4 +1,4 @@
-﻿using Domain.BaseRepository;
+﻿using Domain.IBaseRepository;
 using Domain.Models.Rooms;
 using System;
 using System.Collections.Generic;
@@ -10,5 +10,6 @@ namespace Domain.Models.Prices
 {
     public interface IRoomPriceRepository : IBaseRepository<RoomPrice, int>
     {
+        void AddHistory(RoomPriceHistory history);
     }
 }

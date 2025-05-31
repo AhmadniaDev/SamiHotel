@@ -1,0 +1,58 @@
+﻿@using Application.Features.Capacity.Dto
+@using Application.Common.Extenstios
+@model RoomCapacityDto
+
+<input type="hidden" id="start" value="@ViewBag.start" />
+<form id="CalendarFormm">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>اتاق</th>
+                @foreach (var item in Model.Days)
+                {
+                    <th>
+                        <div>
+                            <span>@item.ToPersianDayOfWeek()</span>
+                            <small>@item.ToPersianDate()</small>
+                        </div>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+            }
+            @foreach (var room in Model.Rooms)
+            {
+                <tr>
+                    <th>@room.Name</th>
+                    @foreach (var item in Model.Days)
+                    {
+                        var price = room.RoomCapacitys.Where(a => a.DateVal.Date == item.Date).FirstOrDefault();
+                        if (price != null)
+                        {
+                            <td>
+                                <input type="number" name="priceListss[@i].Qty" class="form-control" value="@price.Qty" />
+                                <input type="hidden" name="priceListss[@i].DateVal" class="form-control" value="@item" />
+                                <input type="hidden" name="priceListss[@i].RoomId" class="form-control" value="@room.RoomId" />  
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                 <input type="number" name="priceListss[@i].Qty" class="form-control" value="0" />
+                                <input type="hidden" name="priceListss[@i].DateVal" class="form-control" value="@item" />
+                                <input type="hidden" name="priceListss[@i].RoomId" class="form-control" value="@room.RoomId" />
+                            </td>
+                        }
+                        i++;
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" onclick="SendEdit()" class="btn outlined o-second c-second">ذخیره تغییرات</button>
+
+</form>

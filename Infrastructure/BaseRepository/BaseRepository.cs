@@ -1,5 +1,5 @@
 ﻿using Domain.BaseEntity;
-using Domain.BaseRepository;
+using Domain.IBaseRepository;
 using Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;

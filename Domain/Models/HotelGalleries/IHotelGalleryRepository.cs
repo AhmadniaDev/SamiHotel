@@ -1,4 +1,4 @@
-﻿using Domain.BaseRepository;
+﻿using Domain.IBaseRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
